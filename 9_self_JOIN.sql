@@ -63,33 +63,30 @@ WHERE a.stop = 53
 Change the query so that the services between 'Craiglockhart' and 'London Road' are shown.
 */
 
-
+SELECT a.company,
+       a.num,
+       stopa.name,
+       stopb.name
+FROM route a
+JOIN route b ON (a.company=b.company
+                 AND a.num=b.num)
+JOIN stops stopa ON (a.stop=stopa.id)
+JOIN stops stopb ON (b.stop=stopb.id)
+WHERE stopa.name='Craiglockhart'
+  AND stopb.name = 'London Road'
 
 
 /* Question 7
 Give a list of all the services which connect stops 115 and 137 ('Haymarket' and 'Leith')
 */
 
-SELECT name
-FROM actor
-JOIN casting ON casting.actorid = actor.id
-WHERE movieid =
-    (SELECT id
-     FROM movie
-     WHERE title = 'Alien')
+
 
 
 /* Question 8
 Give a list of the services which connect the stops 'Craiglockhart' and 'Tollcross'
 */
 
-SELECT title
-FROM movie
-JOIN casting ON casting.movieid = movie.id
-WHERE actorid =
-    (SELECT id
-     FROM actor
-     WHERE name = 'Harrison Ford')
 
 
 /* Question 9
@@ -98,14 +95,7 @@ including 'Craiglockhart' itself, offered by the LRT company.
 Include the company and bus no. of the relevant services.
 */
 
-SELECT title
-FROM movie
-JOIN casting ON casting.movieid = movie.id
-WHERE actorid =
-    (SELECT id
-     FROM actor
-     WHERE name = 'Harrison Ford')
-  AND ord <> 1
+
 
 /* Question 10
 Find the routes involving two buses that can go from Craiglockhart to Sighthill.
