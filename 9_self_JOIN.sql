@@ -138,12 +138,12 @@ SELECT DISTINCT a.num,
                 d.company
 FROM route a
 JOIN stops stopa ON a.stop = stopa.id
-JOIN route b ON (a.company = b.company
-                 AND a.num = b.num)
+JOIN route b ON a.company = b.company
+            AND a.num = b.num
 JOIN stops stopb ON b.stop = stopb.id
-JOIN route c ON (b.stop = c.stop)
+JOIN route c ON b.stop = c.stop
 JOIN route d ON c.num = d.num
-AND c.company = d.company
+            AND c.company = d.company
 JOIN stops stopd ON d.stop = stopd.id
 WHERE stopa.name = 'Craiglockhart'
   AND stopd.name = 'Sighthill'
