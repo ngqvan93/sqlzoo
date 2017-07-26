@@ -53,8 +53,8 @@ SELECT a.company,
        a.stop,
        b.stop
 FROM route a
-JOIN route b ON (a.company = b.company
-                 AND a.num = b.num)
+JOIN route b ON a.company = b.company
+            AND a.num = b.num
 WHERE a.stop = 53
   AND b.stop = 149
 
@@ -68,10 +68,10 @@ SELECT a.company,
        stopa.name,
        stopb.name
 FROM route a
-JOIN route b ON (a.company=b.company
-                 AND a.num=b.num)
-JOIN stops stopa ON (a.stop=stopa.id)
-JOIN stops stopb ON (b.stop=stopb.id)
+JOIN route b ON a.company = b.company
+            AND a.num = b.num)
+JOIN stops stopa ON a.stop = stopa.id
+JOIN stops stopb ON b.stop = stopb.id
 WHERE stopa.name='Craiglockhart'
   AND stopb.name = 'London Road'
 
@@ -80,13 +80,32 @@ WHERE stopa.name='Craiglockhart'
 Give a list of all the services which connect stops 115 and 137 ('Haymarket' and 'Leith')
 */
 
-
+SELECT DISTINCT a.company,
+                a.num
+FROM route a
+JOIN route b ON a.company = b.company
+            AND a.num = b.num
+WHERE a.stop = 115
+  AND b.stop = 137
 
 
 /* Question 8
 Give a list of the services which connect the stops 'Craiglockhart' and 'Tollcross'
 */
 
+SELECT DISTINCT a.company,
+                a.num
+FROM route a
+JOIN route b ON a.company = b.company
+            AND a.num = b.num
+WHERE a.stop =
+    (SELECT id
+     FROM stops
+     WHERE name = 'Craiglockhart')
+  AND b.stop =
+    (SELECT id
+     FROM stops
+     WHERE name = 'Tollcross')
 
 
 /* Question 9
@@ -95,6 +114,15 @@ including 'Craiglockhart' itself, offered by the LRT company.
 Include the company and bus no. of the relevant services.
 */
 
+SELECT DISTINCT stopb.name,
+                a.company,
+                a.num
+FROM route a
+JOIN route b ON a.company = b.company
+            AND a.num = b.num
+JOIN stops stopa ON a.stop = stopa.id
+JOIN stops stopb ON b.stop = stopb.id
+WHERE stopa.name = 'Craiglockhart'
 
 
 /* Question 10
@@ -103,4 +131,24 @@ Show the bus no. and company for the first bus, the name of the stop for the tra
 and the bus no. and company for the second bus.
 */
 
+SELECT DISTINCT a.num,
+                a.company,
+                stopb.name,
+                d.num,
+                d.company
+FROM route a
+JOIN stops stopa ON a.stop = stopa.id
+JOIN route b ON (a.company = b.company
+                 AND a.num = b.num)
+JOIN stops stopb ON b.stop = stopb.id
+JOIN route c ON (b.stop = c.stop)
+JOIN route d ON c.num = d.num
+AND c.company = d.company
+JOIN stops stopd ON d.stop = stopd.id
+WHERE stopa.name = 'Craiglockhart'
+  AND stopd.name = 'Sighthill'
+ORDER BY a.num*1,
+         b.num,
+         stopb.id,
+         d.num*1
 
