@@ -1,5 +1,5 @@
 /* Question 1
-How many stops are in the database.
+How many stops are there in the database?
 */
 
 SELECT COUNT(name)
@@ -7,7 +7,7 @@ FROM stops
 
 
 /* Question 2
-Find the id value for the stop 'Craiglockhart'
+Find the id value for the stop 'Craiglockhart'.
 */
 
 SELECT id
@@ -77,7 +77,7 @@ WHERE stopa.name='Craiglockhart'
 
 
 /* Question 7
-Give a list of all the services which connect stops 115 and 137 ('Haymarket' and 'Leith')
+Give a list of all the services which connect stops 115 and 137 ('Haymarket' and 'Leith').
 */
 
 SELECT DISTINCT a.company,
@@ -90,7 +90,7 @@ WHERE a.stop = 115
 
 
 /* Question 8
-Give a list of the services which connect the stops 'Craiglockhart' and 'Tollcross'
+Give a list of the services which connect the stops 'Craiglockhart' and 'Tollcross'.
 */
 
 SELECT DISTINCT a.company,
